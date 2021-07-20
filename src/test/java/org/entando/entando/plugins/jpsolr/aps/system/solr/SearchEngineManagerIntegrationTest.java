@@ -95,7 +95,6 @@ class SearchEngineManagerIntegrationTest {
 
     @BeforeAll
     public static void startUp() throws Exception {
-        SolrTestUtils.startContainer();
         ServletContext srvCtx = new MockServletContext("", new FileSystemResourceLoader());
         ApplicationContext applicationContext = new CustomConfigTestUtils().createApplicationContext(srvCtx);
         setApplicationContext(applicationContext);
@@ -133,7 +132,6 @@ class SearchEngineManagerIntegrationTest {
         } catch (Exception e) {
             throw e;
         } finally {
-            SolrTestUtils.stopContainer();
             BaseTestCase.tearDown();
         }
     }
@@ -575,9 +573,7 @@ class SearchEngineManagerIntegrationTest {
             newTextAttribute.setIndexingType(IndexableAttributeInterface.INDEXING_TYPE_TEXT);
             artType.addAttribute(newTextAttribute);
             ((IEntityTypesConfigurer) this.contentManager).updateEntityPrototype(artType);
-            synchronized (this) {
-                this.wait(1000);
-            }
+            this.waitForSearchEngine();
             char[] characters = "abcdefghijklmnopqrstuvwxyz".toCharArray();
             for (int i = 0; i < characters.length; i++) {
                 String c = String.valueOf(characters[i]);
@@ -589,16 +585,14 @@ class SearchEngineManagerIntegrationTest {
                 this.contentManager.insertOnLineContent(content);
                 ids.add(content.getId());
             }
-            synchronized (this) {
-                this.wait(3000);
-            }
+            this.waitForSearchEngine();
             SearchEngineFilter filterByType = new SearchEngineFilter(IContentManager.ENTITY_TYPE_CODE_FILTER_KEY, false, "ART");
             SearchEngineFilter filter = new SearchEngineFilter("Test", true);
             filter.setLangCode("it");
             filter.setOrder(Order.ASC);
             SearchEngineFilter[] filters = {filterByType, filter};
             List<String> contentsId = sem.searchEntityId(filters, null, allowedGroup);
-            assertEquals(contentsId.size(), ids.size());
+            assertEquals(ids.size(), contentsId.size());
             for (int i = 0; i < contentsId.size(); i++) {
                 assertEquals(ids.get(i), contentsId.get(i));
             }
@@ -665,6 +659,7 @@ class SearchEngineManagerIntegrationTest {
             newNumberAttribute.setIndexingType(IndexableAttributeInterface.INDEXING_TYPE_TEXT);
             artType.addAttribute(newNumberAttribute);
             ((IEntityTypesConfigurer) this.contentManager).updateEntityPrototype(artType);
+            this.waitForSearchEngine();
 
             for (int i = 0; i < 30; i++) {
                 Content content = this.contentManager.loadContent("ART104", true);
@@ -681,7 +676,7 @@ class SearchEngineManagerIntegrationTest {
             filter.setOrder(Order.ASC);
             SearchEngineFilter[] filters = {filterByType, filter};
             List<String> contentsId = sem.searchEntityId(filters, null, allowedGroup);
-            assertEquals(contentsId.size(), ids.size());
+            assertEquals(ids.size(), contentsId.size());
             for (int i = 0; i < contentsId.size(); i++) {
                 assertEquals(ids.get(i), contentsId.get(i));
             }

@@ -60,17 +60,6 @@ public class SearchByResourceControllerTest extends AbstractControllerIntegratio
     @Autowired
     private IResourceManager resourceManager;
 
-    @BeforeAll
-    public static void setup() throws Exception {
-        SolrTestUtils.startContainer();
-        AbstractControllerIntegrationTest.setup();
-    }
-
-    @AfterAll
-    public static void teardown() throws Exception {
-        SolrTestUtils.stopContainer();
-    }
-
     @Override
     @BeforeEach
     public void setUp() throws Exception {

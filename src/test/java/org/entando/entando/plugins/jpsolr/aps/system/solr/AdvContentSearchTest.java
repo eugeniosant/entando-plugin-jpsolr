@@ -47,25 +47,13 @@ import org.junit.jupiter.api.Test;
  * Rewriting of some default test for content manager
  * @author E.Santoboni
  */
-public class AdvContentSearchTest /*extends BaseTestCase*/ {
+public class AdvContentSearchTest extends BaseTestCase {
 
     private IContentManager contentManager = null;
     private ICmsSearchEngineManager searchEngineManager = null;
     private ICategoryManager categoryManager;
     
     private List<String> allowedGroup = new ArrayList<>();
-    
-    @BeforeAll
-    public static void startUp() throws Exception {
-        SolrTestUtils.startContainer();
-        BaseTestCase.setUp();
-    }
-    
-    @AfterAll
-    public static void tearDown() throws Exception {
-        BaseTestCase.tearDown();
-        SolrTestUtils.stopContainer();
-    }
     
     @BeforeEach
     protected void init() throws Exception {
