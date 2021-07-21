@@ -37,31 +37,17 @@ import java.util.stream.Collectors;
 import org.entando.entando.aps.system.services.searchengine.FacetedContentsResult;
 import org.entando.entando.aps.system.services.searchengine.SearchEngineFilter;
 import org.entando.entando.plugins.jpsolr.SolrTestUtils;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
  * @author eu
  */
-public class FacetSearchEngineManagerIntegrationTest {
+public class FacetSearchEngineManagerIntegrationTest extends BaseTestCase {
 
     private IContentManager contentManager = null;
     private ICmsSearchEngineManager searchEngineManager = null;
     private ICategoryManager categoryManager;
-
-    @BeforeAll
-    public static void startUp() throws Exception {
-        SolrTestUtils.startContainer();
-        BaseTestCase.setUp();
-    }
-    
-    @AfterAll
-    public static void tearDown() throws Exception {
-        BaseTestCase.tearDown();
-        SolrTestUtils.stopContainer();
-    }
     
     @BeforeEach
     protected void init() throws Exception {

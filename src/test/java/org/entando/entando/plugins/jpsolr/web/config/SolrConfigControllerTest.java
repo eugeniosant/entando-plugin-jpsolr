@@ -39,17 +39,6 @@ public class SolrConfigControllerTest extends AbstractControllerIntegrationTest 
     @Autowired
     private ISolrSearchEngineManager solrSearchEngineManager;
 
-    @BeforeAll
-    public static void setup() throws Exception {
-        SolrTestUtils.startContainer();
-        AbstractControllerIntegrationTest.setup();
-    }
-
-    @AfterAll
-    public static void teardown() throws Exception {
-        SolrTestUtils.stopContainer();
-    }
-
     @Test
     public void testRefreshType() throws Exception {
         UserDetails user = new OAuth2TestUtils.UserBuilder("jack_bauer", "0x24")
@@ -64,11 +53,7 @@ public class SolrConfigControllerTest extends AbstractControllerIntegrationTest 
         
         int payloadSize = JsonPath.read(bodyResult_1, "$.size()");
         Assertions.assertEquals(4, payloadSize);
-        for (int i = 0; i < payloadSize; i++) {
-            int size = JsonPath.read(bodyResult_1, "$[" + i + "].attributeSettings[0].currentConfig.size()");
-            Assertions.assertEquals(0, size);
-        }
-        
+
         ResultActions result_2 = mockMvc
                 .perform(post("/plugins/solr/config/TST").header("Authorization", "Bearer " + accessToken));
         result_2.andExpect(status().isOk());
@@ -85,8 +70,6 @@ public class SolrConfigControllerTest extends AbstractControllerIntegrationTest 
             int size = JsonPath.read(bodyResult_3, "$[" + i + "].attributeSettings[0].currentConfig.size()");
             if (extractedType.equals("TST")) {
                 Assertions.assertTrue(size > 0);
-            } else {
-                Assertions.assertEquals(0, size);
             }
         }
         
@@ -101,9 +84,6 @@ public class SolrConfigControllerTest extends AbstractControllerIntegrationTest 
             int size = JsonPath.read(bodyResult_4, "$[" + i + "].attributeSettings[0].currentConfig.size()");
             Assertions.assertTrue(size > 0);
         }
-        
-        
-        
     }
 
 }

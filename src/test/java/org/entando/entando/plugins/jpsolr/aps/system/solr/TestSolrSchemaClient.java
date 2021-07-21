@@ -9,28 +9,13 @@ import com.agiletec.aps.BaseTestCase;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.entando.entando.plugins.jpsolr.SolrTestUtils;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /**
  * @author E.Santoboni
  */
-public class TestSolrSchemaClient {
-
-    @BeforeAll
-    public static void startUp() throws Exception {
-        SolrTestUtils.startContainer();
-        BaseTestCase.setUp();
-    }
-    
-    @AfterAll
-    public static void tearDown() throws Exception {
-        BaseTestCase.tearDown();
-        SolrTestUtils.stopContainer();
-    }
+public class TestSolrSchemaClient extends BaseTestCase {
     
     @Test
     public void testGetFields() throws Throwable {

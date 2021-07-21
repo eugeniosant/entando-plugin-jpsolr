@@ -63,17 +63,6 @@ public class AdvContentSearchControllerTest extends AbstractControllerIntegratio
     @Autowired
     private ICmsSearchEngineManager searchEngineManager;
     
-    @BeforeAll
-    public static void setup() throws Exception {
-        SolrTestUtils.startContainer();
-        AbstractControllerIntegrationTest.setup();
-    }
-    
-    @AfterAll
-    public static void tearDown() throws Exception {
-        SolrTestUtils.stopContainer();
-    }
-    
     @Override
     @BeforeEach
     public void setUp() throws Exception {
