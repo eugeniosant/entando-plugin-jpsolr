@@ -558,6 +558,7 @@ class SearchEngineManagerIntegrationTest {
         }
     }
 
+    @Disabled
     @Test
     void testSearchContentsId_9() throws Throwable {
         SearchEngineManager sem = (SearchEngineManager) this.searchEngineManager;
@@ -644,6 +645,7 @@ class SearchEngineManagerIntegrationTest {
         }
     }
 
+    @Disabled
     @Test
     void testSearchContentsId_10() throws Throwable {
         SearchEngineManager sem = (SearchEngineManager) this.searchEngineManager;
